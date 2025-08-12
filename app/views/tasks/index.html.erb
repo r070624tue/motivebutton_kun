@@ -1,2 +1,11 @@
 <h1>モチベボタンくん</h1>
 <p>トップページです。</p>
+<p>
+  <% if user_signed_in? %>
+    <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, form: { data: { turbo_confirm: 'ログアウトしますか？' } } %>
+  <% else %>
+    <%= link_to '新規登録', new_user_registration_path %> |
+    <%= link_to 'ログイン', new_user_session_path %>
+  <% end %>
+  
+</p>
