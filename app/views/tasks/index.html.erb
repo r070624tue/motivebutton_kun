@@ -8,4 +8,7 @@
     <%= link_to 'ログイン', new_user_session_path %>
   <% end %>
   
+  <%= month_calendar start_day: :sunday do |date| %>
+    <%= date.day %>
+  <% end %>
 </p>
