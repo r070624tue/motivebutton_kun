@@ -1,5 +1,4 @@
 <h1>モチベボタンくん</h1>
-<p>トップページです。</p>
 <p>
   <% if user_signed_in? %>
     <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, form: { data: { turbo_confirm: 'ログアウトしますか？' } } %>
@@ -8,4 +7,7 @@
     <%= link_to 'ログイン', new_user_session_path %>
   <% end %>
   
+  <%= month_calendar start_day: :sunday do |date| %>
+    <%= date.day %>
+  <% end %>
 </p>
