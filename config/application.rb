@@ -16,6 +16,9 @@ module MotivebuttonKun
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
 
+    # Set week start day to Sunday for calendars/date helpers
+    config.beginning_of_week = :sunday
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
