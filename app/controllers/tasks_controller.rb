@@ -8,11 +8,16 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
-    @task.date_on = Date.current
-    @task.status = 0
+    tasks = tasks_params.map do |attrs|
+      Task.new(
+        content: attrs[:content],
+        user_id: current_user.id,
+        date_on: Date.current,
+        status: 0
+      )
+    end
 
-    if @task.save
+    if tasks.each(&:save)
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
@@ -21,7 +26,7 @@ class TasksController < ApplicationController
 
   private
 
-  def task_params
-    params.require(:task).permit(:content, :date_on, :status).merge(user_id: current_user.id)
+  def tasks_params
+    params.require(:tasks).map { |t| t.permit(:content) }
   end
 end
