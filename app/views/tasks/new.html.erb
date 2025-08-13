@@ -1,14 +1,10 @@
 <%= render 'shared/header' %>
 
-<% if flash[:alert].present? %>
-  <p style="color:#c00;"><%= flash[:alert] %></p>
-<% end %>
-
-<%= form_with url: tasks_path, method: :post, local: true do %>
+<%= form_with model: @task, local: true do |f| %>
   <div id="tasks-container">
     <div class="task-fields">
-      <label>タスク</label>
-      <%= text_field_tag 'tasks[][content]', nil, placeholder: 'やること', required: true %>
+      <%= f.label :content, "タスク" %><br />
+      <%= f.text_field :content %>
     </div>
   </div>
 
