@@ -5,7 +5,7 @@ class MoodsController < ApplicationController
 
   def create
     @mood = current_user.moods.build(mood_params)
-    @mood.date_on ||= Date.current
+    @mood.date_on = Date.current
 
     if @mood.save
       redirect_to '/'

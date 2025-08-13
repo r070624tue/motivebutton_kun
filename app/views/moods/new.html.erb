@@ -1,3 +1,7 @@
+<% @mood.errors.full_messages.each do |message| %>
+  <p><%= message %></p>
+<% end %>
+
 <%= form_with(model: @mood, local: true) do |f| %>
   <div class="image-options">
     <% images_with_scores = [
