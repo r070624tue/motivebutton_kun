@@ -16,12 +16,18 @@ module MotivebuttonKun
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
 
+    # Set week start day to Sunday for calendars/date helpers
+    config.beginning_of_week = :sunday
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    # Use Japan Standard Time for application
+    config.time_zone = "Tokyo"
+    # Store DB timestamps in local time (JST)
+    config.active_record.default_timezone = :local
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
