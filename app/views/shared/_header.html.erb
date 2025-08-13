@@ -1,0 +1,21 @@
+<header class="app-header">
+  <div class="app-header__inner">
+    <%= link_to root_path, class: "app-header__logo" do %>
+      MotiveButton Kun
+    <% end %>
+
+    <div class="app-header__nav">
+      <% if user_signed_in? %>
+        <%= link_to '気分を記録する', new_mood_path, class: 'app-header__link' %>
+        <%= button_to 'ログアウト', destroy_user_session_path,
+              method: :delete,
+              form: { data: { turbo_confirm: 'ログアウトしますか？' }, class: 'app-header__logout-form' },
+              class: 'app-header__button' %>
+      <% else %>
+        <%= link_to '新規登録', new_user_registration_path, class: 'app-header__link' %>
+        <span class="app-header__divider" aria-hidden="true">|</span>
+        <%= link_to 'ログイン', new_user_session_path, class: 'app-header__link' %>
+      <% end %>
+    </div>
+  </div>
+</header>

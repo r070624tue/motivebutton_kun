@@ -1,0 +1,78 @@
+/* ヘッダー */
+.app-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.app-header__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-header__logo {
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #111827;
+}
+
+.app-header__logo:hover {
+  opacity: 0.85;
+}
+
+/* ヘッダーナビ（右側） */
+.app-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-header__link {
+  color: #111827;
+}
+
+.app-header__divider {
+  color: #9ca3af;
+}
+
+.app-header__logout-form {
+  display: inline;
+  margin: 0;
+}
+
+.app-header__button {
+  background: none;
+  border: none;
+  color: #111827;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.app-header__link:hover,
+.app-header__button:hover {
+  opacity: 0.85;
+}
+
+/* 気分投稿ページ */
+.image-options {
+  display: flex;
+  gap: 10px;
+}
+
+.option-image {
+  width: 80px;
+  height: 80px;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+input[type="radio"]:checked + .option-image {
+  border-color: #007bff;
+}
