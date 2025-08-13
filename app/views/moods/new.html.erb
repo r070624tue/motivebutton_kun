@@ -1,0 +1,12 @@
+<%= form_with(model: @question, local: true) do |f| %>
+  <div class="image-options">
+    <% ["happy.png", "sad.png", "angry.png", "cool.png", "thinking.png"].each do |img| %>
+      <label>
+        <%= f.radio_button :answer, img, style: "display:none;" %>
+        <%= image_tag img, class: "option-image" %>
+      </label>
+    <% end %>
+  </div>
+
+  <%= f.submit "送信" %>
+<% end %>
