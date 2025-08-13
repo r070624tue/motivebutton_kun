@@ -1,8 +1,16 @@
-<%= form_with(model: @question, local: true) do |f| %>
+<%= form_with(model: @mood, local: true) do |f| %>
   <div class="image-options">
-    <% ["happy.png", "sad.png", "angry.png", "cool.png", "thinking.png"].each do |img| %>
+    <% images_with_scores = [
+      ["yaruki_moeru_man.png", 5],
+      ["face_smile_woman4.png", 4],
+      ["face_smile_man1.png", 3],
+      ["smartphone_gorogoro_woman_neet.png", 2],
+      ["yaruki_moetsuki_man.png", 1]
+    ] %>
+
+    <% images_with_scores.each do |img, val| %>
       <label>
-        <%= f.radio_button :answer, img, style: "display:none;" %>
+        <%= f.radio_button :score, val, style: "display:none;" %>
         <%= image_tag img, class: "option-image" %>
       </label>
     <% end %>
