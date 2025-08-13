@@ -4,8 +4,14 @@ class MoodsController < ApplicationController
   end
 
   def create
-    Mood.create(mood_params)
-    redirect_to '/'
+    @mood = current_user.moods.build(mood_params)
+    @mood.date_on ||= Date.current
+
+    if @mood.save
+      redirect_to '/'
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private
