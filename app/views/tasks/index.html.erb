@@ -3,3 +3,7 @@
 <%= month_calendar do |date| %>
   <%= date.day %>
 <% end %>
+
+<% if user_signed_in? %>
+  <%= link_to '今日の気分は？', new_mood_path, class: 'floating-mood-link' %>
+<% end %>

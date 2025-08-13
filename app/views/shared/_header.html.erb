@@ -6,7 +6,6 @@
 
     <div class="app-header__nav">
       <% if user_signed_in? %>
-        <%= link_to '今日の気分は？', new_mood_path, class: 'app-header__link' %>
         <%= button_to 'ログアウト', destroy_user_session_path,
               method: :delete,
               form: { data: { turbo_confirm: 'ログアウトしますか？' }, class: 'app-header__logout-form' },
@@ -19,3 +18,4 @@
     </div>
   </div>
 </header>
+
