@@ -47,33 +47,34 @@ class TasksController < ApplicationController
   end
 
   def bulk_update
-    @date = Date.parse(params[:date]) if params[:date].present?
+    @date = if params[:date].present?
+              Date.parse(params[:date])
+            else
+              Date.current
+            end
+
     Task.transaction do
       submitted = tasks_params
+      keep_ids = []
 
       submitted.select { |a| a[:id].present? }.each do |attrs|
         task = current_user.tasks.find(attrs[:id])
         task.update!(attrs.except(:id))
+        keep_ids << task.id
       end
 
       submitted.select { |a| a[:id].blank? && a[:content].present? }.each do |attrs|
-        current_user.tasks.create!(
+        task = current_user.tasks.create!(
           content: attrs[:content],
           date_on: @date,
         )
+        keep_ids << task.id
       end
 
-      if @date.present?
-        submitted_ids = submitted.filter { |a| a[:id].present? }.map { |a| a[:id].to_i }
-        current_user.tasks.where(date_on: @date).where.not(id: submitted_ids).destroy_all
-      end
+      current_user.tasks.where(date_on: @date).where.not(id: keep_ids).destroy_all
     end
+
     redirect_to task_path(@date)
-  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound
-    @tasks = if @date.present?
-               current_user.tasks.where(date_on: @date).order(:created_at)
-             end
-    render :edit, status: :unprocessable_entity
   end
 
   private
