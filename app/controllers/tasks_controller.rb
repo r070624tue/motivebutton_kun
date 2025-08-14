@@ -24,6 +24,11 @@ class TasksController < ApplicationController
     end
   end
 
+  def show
+    @date  = Date.parse(params[:date])
+    @tasks = current_user.tasks.where(date_on: @date).order(:created_at)
+  end
+
   private
 
   def tasks_params
