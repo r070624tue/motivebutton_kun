@@ -62,6 +62,12 @@ class TasksController < ApplicationController
     render :edit, status: :unprocessable_entity
   end
 
+  def destroy
+    task = Task.find(params[:id])
+    task.destroy
+    redirect_to task_path(task.date_on)
+  end
+
   private
 
   def task_params
