@@ -20,7 +20,7 @@
 | user      | references | null: false, foreign_key: true |
 | content   | string     | null: false                    |
 | date_on   | date       | null: false                    |
-| completed | boolean    | null: false                    |
+| completed | boolean    | null: false, default: false    |
 
 ### Association
 

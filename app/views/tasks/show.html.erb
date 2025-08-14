@@ -7,7 +7,7 @@
       <li>
         <%= form_with model: t, url: task_path(t), method: :patch, local: true do |f| %>
           <%= f.check_box :completed, { onchange: 'this.form.submit();' } %>
-          <%= t.content %>
+          <%= content_tag(:span, t.content, style: ("text-decoration: line-through;" if t.completed?)) %>
         <% end %>
       </li>
     <% end %>
