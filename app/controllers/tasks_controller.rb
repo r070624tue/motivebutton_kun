@@ -49,9 +49,23 @@ class TasksController < ApplicationController
   def bulk_update
     @date = Date.parse(params[:date]) if params[:date].present?
     Task.transaction do
-      tasks_params.each do |attrs|
+      submitted = tasks_params
+
+      submitted.select { |a| a[:id].present? }.each do |attrs|
         task = current_user.tasks.find(attrs[:id])
         task.update!(attrs.except(:id))
+      end
+
+      submitted.select { |a| a[:id].blank? && a[:content].present? }.each do |attrs|
+        current_user.tasks.create!(
+          content: attrs[:content],
+          date_on: @date,
+        )
+      end
+
+      if @date.present?
+        submitted_ids = submitted.filter { |a| a[:id].present? }.map { |a| a[:id].to_i }
+        current_user.tasks.where(date_on: @date).where.not(id: submitted_ids).destroy_all
       end
     end
     redirect_to task_path(@date)
@@ -62,12 +76,6 @@ class TasksController < ApplicationController
     render :edit, status: :unprocessable_entity
   end
 
-  def destroy
-    task = Task.find(params[:id])
-    task.destroy
-    redirect_to task_path(task.date_on)
-  end
-
   private
 
   def task_params
@@ -75,6 +83,7 @@ class TasksController < ApplicationController
   end
 
   def tasks_params
+    return [] unless params[:tasks].present?
     params.require(:tasks).map { |t| t.permit(:id, :content, :completed) }
   end
 end
