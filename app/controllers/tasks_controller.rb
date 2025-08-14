@@ -41,6 +41,27 @@ class TasksController < ApplicationController
     end
   end
 
+  def edit
+    @date  = Date.parse(params[:date])
+    @tasks = current_user.tasks.where(date_on: @date).order(:created_at)
+  end
+
+  def bulk_update
+    @date = Date.parse(params[:date]) if params[:date].present?
+    Task.transaction do
+      tasks_params.each do |attrs|
+        task = current_user.tasks.find(attrs[:id])
+        task.update!(attrs.except(:id))
+      end
+    end
+    redirect_to task_path(@date)
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound
+    @tasks = if @date.present?
+               current_user.tasks.where(date_on: @date).order(:created_at)
+             end
+    render :edit, status: :unprocessable_entity
+  end
+
   private
 
   def task_params
@@ -48,6 +69,6 @@ class TasksController < ApplicationController
   end
 
   def tasks_params
-    params.require(:tasks).map { |t| t.permit(:content) }
+    params.require(:tasks).map { |t| t.permit(:id, :content, :completed) }
   end
 end

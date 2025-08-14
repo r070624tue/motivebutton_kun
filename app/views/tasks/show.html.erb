@@ -1,6 +1,7 @@
 <%= render 'shared/header' %>
 
 <h2><%= l(@date, format: :long) %> のタスク</h2>
+
 <% if @tasks.any? %>
   <ul>
     <% @tasks.each do |t| %>
@@ -15,4 +16,8 @@
 <% else %>
   <p>この日にはタスクがありません。</p>
 <% end %>
-<%= link_to "カレンダーに戻る", root_path %>
+
+<div style="margin-top: 16px;">
+  <%= link_to 'この日を編集', edit_task_path(@date) %> |
+  <%= link_to 'カレンダーに戻る', root_path %>
+</div>
