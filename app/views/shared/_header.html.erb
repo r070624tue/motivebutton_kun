@@ -6,6 +6,8 @@
 
     <div class="app-header__nav">
       <% if user_signed_in? %>
+        <span class="app-header__user"><%= current_user.nickname %></span>
+        <span class="app-header__divider" aria-hidden="true">|</span>
         <%= button_to 'ログアウト', destroy_user_session_path,
               method: :delete,
               form: { data: { turbo_confirm: 'ログアウトしますか？' }, class: 'app-header__logout-form' },
