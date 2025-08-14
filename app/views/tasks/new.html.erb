@@ -1,0 +1,13 @@
+<%= render 'shared/header' %>
+
+<%= form_with model: @task, local: true do |f| %>
+  <div id="tasks-wrapper">
+    <div class="task-field">
+      <input type="text" name="tasks[][content]" placeholder="タスク内容">
+      <button type="button" class="remove-task">削除</button>
+    </div>
+  </div>
+
+  <button type="button" id="add-task">追加</button>
+  <%= f.submit "登録" %>
+<% end %>

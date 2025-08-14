@@ -4,7 +4,7 @@
   <p><%= message %></p>
 <% end %>
 
-<%= form_with(model: @mood, local: true) do |f| %>
+<%= form_with model: @mood, local: true do |f| %>
   <div class="image-options">
     <% images_with_scores = [
       ["yaruki_moeru_man.png", 5],
@@ -24,3 +24,5 @@
 
   <%= f.submit "送信" %>
 <% end %>
+
+  <p>画像は「いらすとや」より引用しています（https://www.irasutoya.com/）</p>

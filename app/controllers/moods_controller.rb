@@ -4,11 +4,11 @@ class MoodsController < ApplicationController
   end
 
   def create
-    @mood = current_user.moods.build(mood_params)
+    @mood = Mood.new(mood_params)
     @mood.date_on = Date.current
 
     if @mood.save
-      redirect_to '/'
+      redirect_to new_task_path
     else
       render :new, status: :unprocessable_entity
     end
