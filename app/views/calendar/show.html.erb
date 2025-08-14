@@ -1,2 +1,11 @@
-<h1>Calendar#show</h1>
-<p>Find me in app/views/calendar/show.html.erb</p>
+<h2><%= l(@date, format: :long) %> のタスク</h2>
+<% if @tasks.any? %>
+  <ul>
+    <% @tasks.each do |t| %>
+      <li><%= t.content %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>この日にはタスクがありません。</p>
+<% end %>
+<%= link_to "カレンダーに戻る", root_path %>
