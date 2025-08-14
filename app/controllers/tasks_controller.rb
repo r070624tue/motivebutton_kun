@@ -13,7 +13,7 @@ class TasksController < ApplicationController
         content: attrs[:content],
         user_id: current_user.id,
         date_on: Date.current,
-        status: 0
+        completed: false
       )
     end
 
