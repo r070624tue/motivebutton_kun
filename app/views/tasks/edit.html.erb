@@ -3,16 +3,20 @@
 <h2><%= l(@date, format: :long) %> のタスクを編集</h2>
 
 <% if @tasks.any? %>
-  <ul>
-    <% @tasks.each do |t| %>
-      <li style="margin-bottom: 8px;">
-        <%= form_with model: t, url: task_path(t), method: :patch, local: true do |f| %>
-          <%= f.text_field :content, value: t.content, size: 40 %>
-          <%= f.submit '更新' %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
+  <%= form_with url: bulk_update_tasks_path, method: :patch, local: true do %>
+    <%= hidden_field_tag :date, @date %>
+    <ul>
+      <% @tasks.each do |t| %>
+        <li style="margin-bottom: 8px;">
+          <%= fields_for 'tasks[]', t, index: nil do |f| %>
+            <%= f.hidden_field :id %>
+            <%= f.text_field :content, size: 40 %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <%= submit_tag '保存' %>
+  <% end %>
 <% else %>
   <p>この日にはタスクがありません。</p>
 <% end %>
