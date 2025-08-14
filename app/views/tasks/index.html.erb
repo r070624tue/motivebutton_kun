@@ -1,7 +1,7 @@
 <%= render 'shared/header' %>
   
 <%= month_calendar do |date| %>
-  <%= date.day %>
+  <%= link_to date.day, task_path(date), class: "day-link" %>
 <% end %>
 
 <% if user_signed_in? %>

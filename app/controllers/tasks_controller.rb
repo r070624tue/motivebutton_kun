@@ -13,7 +13,6 @@ class TasksController < ApplicationController
         content: attrs[:content],
         user_id: current_user.id,
         date_on: Date.current,
-        status: 0
       )
     end
 
@@ -24,7 +23,29 @@ class TasksController < ApplicationController
     end
   end
 
+  def show
+    @date  = Date.parse(params[:date])
+    @tasks = current_user.tasks.where(date_on: @date).order(:created_at)
+  end
+
+  def update
+    @task = current_user.tasks.find(params[:id])
+    @date = @task.date_on
+    if @task.update(task_params)
+      redirect_to task_path(@date)
+    else
+      @tasks = current_user.tasks
+                        .where(date_on: @date)
+                        .order(:created_at)
+      render :show, status: :unprocessable_entity
+    end
+  end
+
   private
+
+  def task_params
+    params.require(:task).permit(:content, :completed)
+  end
 
   def tasks_params
     params.require(:tasks).map { |t| t.permit(:content) }
