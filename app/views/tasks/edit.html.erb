@@ -2,23 +2,29 @@
 
 <h2><%= l(@date, format: :long) %> のタスクを編集</h2>
 
-<% if @tasks.any? %>
-  <%= form_with url: bulk_update_tasks_path, method: :patch, local: true do %>
-    <%= hidden_field_tag :date, @date %>
-    <ul>
-      <% @tasks.each do |t| %>
-        <li style="margin-bottom: 8px;">
-          <%= fields_for 'tasks[]', t, index: nil do |f| %>
-            <%= f.hidden_field :id %>
-            <%= f.text_field :content, size: 40 %>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
-    <%= submit_tag '保存' %>
-  <% end %>
-<% else %>
-  <p>この日にはタスクがありません。</p>
+<%= form_with url: bulk_update_tasks_path, method: :patch, local: true do %>
+  <%= hidden_field_tag :date, @date %>
+
+  <div id="tasks-wrapper">
+    <% if @tasks.any? %>
+      <ul>
+        <% @tasks.each do |t| %>
+          <li class="task-field" style="margin-bottom: 8px;">
+            <%= fields_for 'tasks[]', t, index: nil do |f| %>
+              <%= f.hidden_field :id %>
+              <%= f.text_field :content, size: 40 %>
+            <% end %>
+            <button type="button" class="remove-task">削除</button>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>この日にはタスクがありません。</p>
+    <% end %>
+  </div>
+
+  <button type="button" id="add-task">追加</button>
+  <%= submit_tag '保存' %>
 <% end %>
 
 <div style="margin-top: 16px;">
