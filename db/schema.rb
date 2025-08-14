@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_13_022644) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_14_053322) do
   create_table "moods", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "score", null: false
@@ -24,9 +24,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_13_022644) do
     t.bigint "user_id", null: false
     t.string "content", null: false
     t.date "date_on", null: false
-    t.integer "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "completed", default: false, null: false
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
