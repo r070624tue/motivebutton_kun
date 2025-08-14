@@ -1,0 +1,23 @@
+<%= render 'shared/header' %>
+
+<h2><%= l(@date, format: :long) %> のタスクを編集</h2>
+
+<% if @tasks.any? %>
+  <ul>
+    <% @tasks.each do |t| %>
+      <li style="margin-bottom: 8px;">
+        <%= form_with model: t, url: task_path(t), method: :patch, local: true do |f| %>
+          <%= f.text_field :content, value: t.content, size: 40 %>
+          <%= f.submit '更新' %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>この日にはタスクがありません。</p>
+<% end %>
+
+<div style="margin-top: 16px;">
+  <%= link_to 'この日の表示に戻る', task_path(@date) %> |
+  <%= link_to 'カレンダーに戻る', root_path %>
+</div>
