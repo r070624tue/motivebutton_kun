@@ -25,6 +25,7 @@ module MotivebuttonKun
     # in config/environments, which are processed later.
     #
     # Use Japan Standard Time for application
+    config.i18n.default_locale = :ja
     config.time_zone = "Tokyo"
     # Store DB timestamps in local time (JST)
     config.active_record.default_timezone = :local
