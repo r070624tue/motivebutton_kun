@@ -1,28 +1,32 @@
 <%= render 'shared/header' %>
 
-<% @mood.errors.full_messages.each do |message| %>
-  <p><%= message %></p>
-<% end %>
+<div class="container mood-container">
+  <h2>今日の気分は？</h2>
 
-<%= form_with model: @mood, local: true do |f| %>
-  <div class="image-options">
-    <% images_with_scores = [
-      ["yaruki_moeru_man.png", 5],
-      ["face_smile_woman4.png", 4],
-      ["face_smile_man1.png", 3],
-      ["smartphone_gorogoro_woman_neet.png", 2],
-      ["yaruki_moetsuki_man.png", 1]
-    ] %>
+  <% @mood.errors.full_messages.each do |message| %>
+    <p><%= message %></p>
+  <% end %>
 
-    <% images_with_scores.each do |img, val| %>
-      <label>
-        <%= f.radio_button :score, val, style: "display:none;" %>
-        <%= image_tag img, class: "option-image" %>
-      </label>
-    <% end %>
-  </div>
+  <%= form_with model: @mood, local: true do |f| %>
+    <div class="image-options">
+      <% images_with_scores = [
+        ["yaruki_moeru_man.png", 5],
+        ["face_smile_woman4.png", 4],
+        ["face_smile_man1.png", 3],
+        ["smartphone_gorogoro_woman_neet.png", 2],
+        ["yaruki_moetsuki_man.png", 1]
+      ] %>
 
-  <%= f.submit "送信", class: "mood-submit" %>
-<% end %>
+      <% images_with_scores.each do |img, val| %>
+        <label>
+          <%= f.radio_button :score, val, style: "display:none;" %>
+          <%= image_tag img, class: "option-image" %>
+        </label>
+      <% end %>
+    </div>
 
-  <p>画像は「いらすとや」より引用しています（https://www.irasutoya.com/）</p>
+    <%= f.submit "送信", class: "btn-primary mood-submit" %>
+  <% end %>
+
+  <p style="margin-top: 2rem; color: #7f8c8d;">画像は「いらすとや」より引用しています（https://www.irasutoya.com/）</p>
+</div>

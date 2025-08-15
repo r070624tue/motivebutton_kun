@@ -1,0 +1,336 @@
+/* 全体設定 */
+body {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+a {
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #2980b9;
+}
+
+/* ヘッダー */
+.app-header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 1rem 2rem;
+}
+
+.app-header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.app-header__logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.app-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.app-header__link {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #3498db;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.app-header__link:hover {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.app-header__user {
+  font-weight: 700;
+  color: #34495e;
+}
+
+/* フォーム共通 */
+.form-wrapper {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #34495e;
+}
+
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="password"] {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid #bdc3c7;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.field input[type="text"]:focus,
+.field input[type="email"]:focus,
+.field input[type="password"]:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.actions input[type="submit"],
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #3498db;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.actions input[type="submit"]:hover,
+.btn-primary:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+/* devise/shared/_links */
+.devise-links {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* 気分選択ページ */
+.mood-container {
+  text-align: center;
+}
+
+.image-options {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.option-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  cursor: pointer;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.option-image:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+input[type="radio"]:checked + .option-image {
+  border-color: #e74c3c;
+  transform: scale(1.15);
+  box-shadow: 0 8px 24px rgba(231, 76, 60, 0.4);
+}
+
+.mood-submit {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* カレンダー */
+.calendar-wrap {
+  padding: 2rem;
+}
+
+.simple-calendar table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.simple-calendar th {
+  padding: 1rem 0.5rem;
+  font-weight: 700;
+  color: #7f8c8d;
+}
+
+.simple-calendar td {
+  border: 1px solid #ecf0f1;
+  height: 100px;
+  vertical-align: top;
+  padding: 0.5rem;
+}
+
+.day-link {
+  display: block;
+  height: 100%;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.simple-calendar .today {
+  background-color: #fdf9e7;
+}
+
+.floating-mood-link {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 150px;
+  height: 50px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 25px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.floating-mood-link:hover {
+  transform: scale(1.05);
+  background-color: #c0392b;
+  color: white;
+}
+
+/* タスク表示ページ */
+.task-show {
+  text-align: center;
+}
+
+.mood-image {
+  margin-bottom: 2rem;
+}
+
+.mood-image img {
+  max-width: 150px;
+  border-radius: 50%;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+#task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 2rem;
+  max-width: 600px;
+}
+
+#task-list li {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.task-toggle {
+  margin-right: 1rem;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.task-content {
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.task-content.is-completed {
+  text-decoration: line-through;
+  color: #95a5a6;
+}
+
+.task-show__links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* タスク編集・新規作成ページ */
+#tasks-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.task-field {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.task-field input[type="text"] {
+  flex-grow: 1;
+  width: auto;
+}
+
+.remove-task, #add-task {
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.remove-task {
+  background-color: #e74c3c;
+}
+.remove-task:hover {
+  background-color: #c0392b;
+}
+
+#add-task {
+  background-color: #2ecc71;
+}
+#add-task:hover {
+  background-color: #27ae60;
+}

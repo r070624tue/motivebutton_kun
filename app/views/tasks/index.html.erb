@@ -1,10 +1,11 @@
 <%= render 'shared/header' %>
-  
-<div class="calendar-wrap">
-  <%= month_calendar do |date| %>
-    <%= link_to date.day, task_path(date), class: "day-link" %>
-  <% end %>
-  
+
+<div class="container">
+  <div class="calendar-wrap">
+    <%= month_calendar(header: { partial: 'tasks/calendar_header' }) do |date| %>
+      <%= link_to date.day, task_path(date), class: "day-link" %>
+    <% end %>
+  </div>
 </div>
 
 <% if user_signed_in? %>

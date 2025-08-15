@@ -1,33 +1,37 @@
 <%= render 'shared/header' %>
 
-<h2><%= l(@date, format: :long) %> のタスクを編集</h2>
+<div class="container">
+  <h2><%= l(@date, format: :long) %> のタスクを編集</h2>
 
-<%= form_with url: bulk_update_tasks_path, method: :patch, local: true do %>
-  <%= hidden_field_tag :date, @date %>
+  <div class="form-wrapper">
+    <%= form_with url: bulk_update_tasks_path, method: :patch, local: true do %>
+      <%= hidden_field_tag :date, @date %>
 
-  <div id="tasks-wrapper">
-    <% if @tasks.any? %>
-      <ul>
-        <% @tasks.each do |t| %>
-          <li class="task-field" style="margin-bottom: 8px;">
-            <%= fields_for 'tasks[]', t, index: nil do |f| %>
-              <%= f.hidden_field :id %>
-              <%= f.text_field :content, size: 40 %>
-            <% end %>
-            <button type="button" class="remove-task">削除</button>
-          </li>
+      <div id="tasks-wrapper">
+        <% if @tasks.any? %>
+          <% @tasks.each do |t| %>
+            <div class="task-field">
+              <%= fields_for 'tasks[]', t, index: nil do |f| %>
+                <%= f.hidden_field :id %>
+                <%= f.text_field :content, placeholder: "タスク内容" %>
+              <% end %>
+              <button type="button" class="remove-task">削除</button>
+            </div>
+          <% end %>
+        <% else %>
+          <p>この日にはタスクがありません。</p>
         <% end %>
-      </ul>
-    <% else %>
-      <p>この日にはタスクがありません。</p>
+      </div>
+
+      <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+        <button type="button" id="add-task">追加</button>
+        <%= submit_tag '保存', class: 'btn-primary', style: 'width: auto; flex-grow: 1;' %>
+      </div>
     <% end %>
+
+    <div class="task-show__links" style="margin-top: 2rem;">
+      <%= link_to 'タスク一覧に戻る', task_path(@date) %> |
+      <%= link_to 'カレンダーに戻る', root_path %>
+    </div>
   </div>
-
-  <button type="button" id="add-task">追加</button>
-  <%= submit_tag '保存' %>
-<% end %>
-
-<div style="margin-top: 16px;">
-  <%= link_to 'タスク一覧に戻る', task_path(@date) %> |
-  <%= link_to 'カレンダーに戻る', root_path %>
 </div>

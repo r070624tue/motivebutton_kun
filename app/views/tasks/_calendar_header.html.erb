@@ -1,0 +1,5 @@
+<div style="text-align: center; font-size: 1.25rem; font-weight: 400; margin-bottom: 10px;">
+  <%= link_to "←", calendar.url_for_previous_view, style: "text-decoration: none; color: #333;" %>
+  <span class="calendar-title" style="margin: 0 20px;"><%= start_date.year %>年 <%= t('date.month_names')[start_date.month] %></span>
+  <%= link_to "→", calendar.url_for_next_view, style: "text-decoration: none; color: #333;" %>
+</div>
