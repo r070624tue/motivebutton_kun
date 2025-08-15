@@ -1,6 +1,7 @@
 function initTasks() {
   const addTaskBtn = document.getElementById("add-task");
   const tasksWrapper = document.getElementById("tasks-wrapper");
+  const taskForm = document.getElementById("task-form");
 
   if (!addTaskBtn || !tasksWrapper) return;
 
@@ -24,6 +25,13 @@ function initTasks() {
       }
     });
     tasksWrapper.dataset.bound = "true";
+  }
+
+  if (taskForm && !taskForm.dataset.boundSubmit) {
+    taskForm.addEventListener("submit", function () {
+      alert("ふん。まあせいぜい頑張りなさい。");
+    });
+    taskForm.dataset.boundSubmit = "true";
   }
 }
 
