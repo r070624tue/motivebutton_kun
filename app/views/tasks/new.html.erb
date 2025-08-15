@@ -3,7 +3,7 @@
 <%= form_with model: @task, local: true, html: { id: 'task-form' } do |f| %>
   <div id="tasks-wrapper">
     <div class="task-field">
-      <input type="text" name="tasks[][content]" placeholder="タスク内容">
+      <input type="text" name="tasks[][content]" placeholder="タスク">
       <button type="button" class="remove-task">削除</button>
     </div>
   </div>

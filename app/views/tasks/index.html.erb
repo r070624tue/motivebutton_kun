@@ -1,8 +1,11 @@
 <%= render 'shared/header' %>
   
-<%= month_calendar do |date| %>
-  <%= link_to date.day, task_path(date), class: "day-link" %>
-<% end %>
+<div class="calendar-wrap">
+  <%= month_calendar do |date| %>
+    <%= link_to date.day, task_path(date), class: "day-link" %>
+  <% end %>
+  
+</div>
 
 <% if user_signed_in? %>
   <%= link_to '今日の気分は？', new_mood_path, class: 'floating-mood-link' %>

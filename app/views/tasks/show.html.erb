@@ -1,14 +1,21 @@
 <%= render 'shared/header' %>
 
-<h2><%= l(@date, format: :long) %> のタスク</h2>
+<div class="task-show">
+  <h2><%= l(@date, format: :long) %> のタスク</h2>
+
+  <% if @mood.present? && @mood.image_name.present? %>
+    <div class="mood-image">
+      <%= image_tag @mood.image_name, alt: "選択した気分画像" %>
+    </div>
+  <% end %>
 
 <% if @tasks.any? %>
-  <ul>
+  <ul id="task-list">
     <% @tasks.each do |t| %>
       <li>
         <%= form_with model: t, url: task_path(t), method: :patch, local: true do |f| %>
-          <%= f.check_box :completed, { onchange: 'this.form.submit();' } %>
-          <%= content_tag(:span, t.content, style: ("text-decoration: line-through;" if t.completed?)) %>
+          <%= f.check_box :completed, class: "task-toggle" %>
+          <%= content_tag(:span, t.content, class: ["task-content", ("is-completed" if t.completed?)].compact.join(" ")) %>
         <% end %>
       </li>
     <% end %>
@@ -17,7 +24,8 @@
   <p>この日にはタスクがありません。</p>
 <% end %>
 
-<div style="margin-top: 16px;">
-  <%= link_to 'この日を編集', edit_task_path(@date) %> |
-  <%= link_to 'カレンダーに戻る', root_path %>
+  <div class="task-show__links">
+    <%= link_to '編集', edit_task_path(@date) %> |
+    <%= link_to 'カレンダーに戻る', root_path %>
+  </div>
 </div>

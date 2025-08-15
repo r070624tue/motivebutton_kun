@@ -13,4 +13,14 @@ class Mood < ApplicationRecord
 
   #   errors.add(:base, '投稿は1日1回までです')
   # end
+
+  def image_name
+    case score
+    when 5 then 'yaruki_moeru_man.png'
+    when 4 then 'face_smile_woman4.png'
+    when 3 then 'face_smile_man1.png'
+    when 2 then 'smartphone_gorogoro_woman_neet.png'
+    when 1 then 'yaruki_moetsuki_man.png'
+    end
+  end
 end

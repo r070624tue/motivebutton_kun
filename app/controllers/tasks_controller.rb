@@ -12,7 +12,7 @@ class TasksController < ApplicationController
       Task.new(
         content: attrs[:content],
         user_id: current_user.id,
-        date_on: Date.current,
+        date_on: Date.current
       )
     end
 
@@ -26,6 +26,7 @@ class TasksController < ApplicationController
   def show
     @date  = Date.parse(params[:date])
     @tasks = current_user.tasks.where(date_on: @date).order(:created_at)
+    @mood  = current_user.moods.where(date_on: @date).order(created_at: :desc).first
   end
 
   def update
@@ -35,8 +36,8 @@ class TasksController < ApplicationController
       redirect_to task_path(@date)
     else
       @tasks = current_user.tasks
-                        .where(date_on: @date)
-                        .order(:created_at)
+                           .where(date_on: @date)
+                           .order(:created_at)
       render :show, status: :unprocessable_entity
     end
   end
@@ -66,7 +67,7 @@ class TasksController < ApplicationController
       submitted.select { |a| a[:id].blank? && a[:content].present? }.each do |attrs|
         task = current_user.tasks.create!(
           content: attrs[:content],
-          date_on: @date,
+          date_on: @date
         )
         keep_ids << task.id
       end
@@ -85,6 +86,7 @@ class TasksController < ApplicationController
 
   def tasks_params
     return [] unless params[:tasks].present?
+
     params.require(:tasks).map { |t| t.permit(:id, :content, :completed) }
   end
 end
