@@ -8,4 +8,5 @@ Rails.application.routes.draw do
     end
   end
   resources :tasks, param: :date, only: [:show, :edit]
+  resources :advices, only: [:create]
 end
