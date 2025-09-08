@@ -28,7 +28,28 @@ function initTasks() {
 
   if (taskForm && !taskForm.dataset.boundSubmit) {
     taskForm.addEventListener("submit", function () {
-      alert("頑張りましょう！");
+      const mood = document.getElementById('mood').value;
+      const task = document.getElementById('task').value;
+      const adviceResultElement = document.getElementById('adviceResult');
+
+      adviceResultElement.textContent = 'AIがアドバイスを考えています...';
+
+      try {
+        const response = await fetch('/advices', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ mood: mood, task: task }),
+        });
+
+        const data = await response.json();
+        adviceResultElement.textContent = data.advice;
+
+      } catch (error) {
+        console.error('エラー:', error);
+        adviceResultElement.textContent = 'エラーが発生しました。もう一度試してください。';
+      }
     });
     taskForm.dataset.boundSubmit = "true";
   }
