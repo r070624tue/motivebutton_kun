@@ -25,6 +25,9 @@
       <p>この日にはタスクがありません。</p>
     <% end %>
 
+    <h2>AIからのアドバイス</h2>
+    <p id="adviceResult">ここにアドバイスが表示されます。</p>
+
     <div class="task-show__links">
       <%= link_to '編集', edit_task_path(@date), class: 'btn-primary', style: 'background-color: #34cfeb;' %>
       <%= link_to 'カレンダーに戻る', root_path, class: 'btn-primary', style: 'background-color: #95a5a6;' %>
