@@ -1,8 +1,9 @@
 function initTasks() {
   const addTaskBtn = document.getElementById("add-task");
   const tasksWrapper = document.getElementById("tasks-wrapper");
-  const taskForm = document.getElementById("task-form");
   const taskList = document.getElementById("task-list");
+  const adviceResultElement = document.getElementById('adviceResult');
+  const taskShowElement = document.querySelector('.task-show');
 
   if (addTaskBtn && !addTaskBtn.dataset.bound) {
     addTaskBtn.addEventListener("click", () => {
@@ -26,23 +27,27 @@ function initTasks() {
     tasksWrapper.dataset.bound = "true";
   }
 
-  if (taskForm && !taskForm.dataset.boundSubmit) {
-    taskForm.addEventListener("submit", function () {
-      const mood = document.getElementById('mood').value;
-      const task = document.getElementById('task').value;
-      const adviceResultElement = document.getElementById('adviceResult');
+  if (adviceResultElement && taskShowElement && !taskShowElement.dataset.adviceLoaded) {
+    taskShowElement.dataset.adviceLoaded = 'true';
+    const date = taskShowElement.dataset.date;
 
-      adviceResultElement.textContent = 'AIがアドバイスを考えています...';
+    adviceResultElement.textContent = 'AIがアドバイスを考えています...';
 
+    (async () => {
       try {
         const response = await fetch('/advices', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
           },
-          body: JSON.stringify({ mood: mood, task: task }),
+          body: JSON.stringify({ date: date }),
         });
 
+        if (!response.ok) {
+          throw new Error('サーバーからの応答が正常ではありません。');
+        }
+        
         const data = await response.json();
         adviceResultElement.textContent = data.advice;
 
@@ -50,8 +55,7 @@ function initTasks() {
         console.error('エラー:', error);
         adviceResultElement.textContent = 'エラーが発生しました。もう一度試してください。';
       }
-    });
-    taskForm.dataset.boundSubmit = "true";
+    })();
   }
 
   if (taskList && !taskList.dataset.boundCheckAll) {
