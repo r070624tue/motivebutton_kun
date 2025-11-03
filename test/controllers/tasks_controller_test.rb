@@ -30,6 +30,13 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path
   end
 
+  test 'should redirect to new mood path if no mood selected for edit' do
+    # ユーザーのその日の気分を削除して、気分が選択されていない状態を再現
+    @user.moods.where(date_on: '2025-08-20').destroy_all
+    get edit_task_by_date_path(date: '2025-08-20')
+    assert_redirected_to new_mood_path
+  end
+
   test 'should get index' do
     get tasks_url
     assert_response :success

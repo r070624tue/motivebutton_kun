@@ -50,6 +50,13 @@ class TasksController < ApplicationController
 
   def edit
     @date  = Date.parse(params[:date])
+    @mood  = current_user.moods.where(date_on: @date).order(created_at: :desc).first
+
+    if @mood.nil?
+      redirect_to new_mood_path, alert: "先に今日の気分を選択してください。"
+      return
+    end
+
     @tasks = current_user.tasks.where(date_on: @date).order(:created_at)
   end
 
