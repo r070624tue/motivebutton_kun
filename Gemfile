@@ -75,3 +75,5 @@ end
 gem 'devise'
 gem 'simple_calendar', '~> 2.4'
 gem "rails-i18n", "~> 7.0"
+
+gem "ruby-openai", "~> 8.3"

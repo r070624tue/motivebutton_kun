@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user!, only: [:show, :edit]
   def index
     @tasks = Task.all.order(date_on: :asc)
   end
@@ -24,7 +25,12 @@ class TasksController < ApplicationController
   end
 
   def show
-    @date  = Date.parse(params[:date])
+    begin
+      @date  = Date.parse(params[:date])
+    rescue Date::Error
+      redirect_to root_path, alert: "無効な日付です。"
+      return
+    end
     @tasks = current_user.tasks.where(date_on: @date).order(:created_at)
     @mood  = current_user.moods.where(date_on: @date).order(created_at: :desc).first
   end

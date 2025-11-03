@@ -58,6 +58,12 @@ function initTasks() {
     })();
   }
 
+  if (taskForm && !taskForm.dataset.boundSubmit) {
+    taskForm.addEventListener("submit", function () {
+    });
+    taskForm.dataset.boundSubmit = "true";
+  }
+
   if (taskList && !taskList.dataset.boundCheckAll) {
     taskList.addEventListener("change", function (e) {
       const target = e.target;
