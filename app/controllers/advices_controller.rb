@@ -16,7 +16,7 @@ class AdvicesController < ApplicationController
     mood_name_text = @mood.mood_name
     mood_score_text = "スコアが#{@mood.score}点"
     task_list = @tasks.map(&:content).join('、')
-    prompt = "今日の気分は「#{mood_name_text}」（#{mood_score_text}）で、やるべきタスクは「#{task_list}」です。この状況を踏まえて、ポジティブで具体的なアドバイスを100文字程度でお願いします。"
+    prompt = "今日の気分は「#{mood_name_text}」（#{mood_score_text}）で、やるべきタスクは「#{task_list}」です。この状況を踏まえて、ポジティブなアドバイスを100文字程度でお願いします。"
 
     begin
       advice_text = openai_api_call(prompt)
@@ -38,7 +38,7 @@ class AdvicesController < ApplicationController
     request['Content-Type'] = 'application/json'
     request['Authorization'] = "Bearer #{ENV['OPENAI_API_KEY']}"
     request.body = {
-      model: 'gpt-5-mini',
+      model: 'gpt-5',
       messages: [
         { role: 'user', content: prompt }
       ]
