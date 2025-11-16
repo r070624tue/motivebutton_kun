@@ -1,4 +1,6 @@
-require 'openai'
+require 'net/http'
+require 'json'
+require 'uri'
 
 class AdvicesController < ApplicationController
   def create
@@ -28,14 +30,28 @@ class AdvicesController < ApplicationController
   private
 
   def openai_api_call(prompt)
-    client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
-    response = client.chat(
-      parameters: {
-        model: "gpt-4o-mini",
-        messages: [{ role: "user", content: prompt }]
-      }
-    )
+    uri = URI.parse('https://api.openai.com/v1/chat/completions')
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
 
-    response.dig("choices", 0, "message", "content")
+    request = Net::HTTP::Post.new(uri.path)
+    request['Content-Type'] = 'application/json'
+    request['Authorization'] = "Bearer #{ENV['OPENAI_API_KEY']}"
+    request.body = {
+      model: 'gpt-5-mini',
+      messages: [
+        { role: 'user', content: prompt }
+      ]
+    }.to_json
+
+    response = http.request(request)
+    response_body = JSON.parse(response.body)
+
+    if response.code.to_i == 200
+      response_body.dig('choices', 0, 'message', 'content')
+    else
+      Rails.logger.error "OpenAI API Error: #{response_body}"
+      raise "OpenAI API Error: #{response_body['error']&.dig('message') || response_body}"
+    end
   end
 end
