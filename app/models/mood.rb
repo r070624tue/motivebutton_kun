@@ -4,15 +4,7 @@ class Mood < ApplicationRecord
   validates :score, presence: true
   validates :date_on, presence: true
 
-  # validate :only_one_post_per_day, on: :create
-
-  # private
-
-  # def only_one_post_per_day
-  #   return unless user.moods.where(date_on: Time.zone.today.all_day).exists?
-
-  #   errors.add(:base, '投稿は1日1回までです')
-  # end
+  validate :only_one_post_per_day, on: :create
 
   def image_name
     case score
@@ -33,5 +25,14 @@ class Mood < ApplicationRecord
     when 1 then 'やる気なし（最悪）'
     else '不明'
     end
+  end
+
+  private
+
+  def only_one_post_per_day
+    return unless date_on.present?
+    return unless user.moods.where(date_on: date_on).exists?
+
+    errors.add(:base, "#{l(date_on, format: :long)}の気分は既に登録されています")
   end
 end

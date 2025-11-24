@@ -6,19 +6,22 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @date = parse_date_param || Date.current
   end
 
   def create
+    @date = parse_date_param || Date.current
+
     tasks = tasks_params.map do |attrs|
       Task.new(
         content: attrs[:content],
         user_id: current_user.id,
-        date_on: Date.current
+        date_on: @date
       )
     end
 
     if tasks.each(&:save)
-      redirect_to root_path
+      redirect_to task_path(@date)
     else
       render :new, status: :unprocessable_entity
     end
@@ -53,7 +56,7 @@ class TasksController < ApplicationController
     @mood  = current_user.moods.where(date_on: @date).order(created_at: :desc).first
 
     if @mood.nil?
-      redirect_to new_mood_path, alert: "先に今日の気分を選択してください。"
+      redirect_to new_mood_path(date: @date.to_s), alert: "先に#{l(@date, format: :long)}の気分を選択してください。"
       return
     end
 
@@ -92,6 +95,13 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def parse_date_param
+    return nil unless params[:date].present?
+    Date.parse(params[:date])
+  rescue Date::Error
+    nil
+  end
 
   def task_params
     params.require(:task).permit(:content, :completed)
