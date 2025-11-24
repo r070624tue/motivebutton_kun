@@ -7,5 +7,7 @@ Rails.application.routes.draw do
       patch :bulk_update
     end
   end
-  resources :tasks, param: :date, only: [:show, :edit]
+  get 'tasks/:date', to: 'tasks#show', as: :task_show
+  get 'tasks/:date/edit', to: 'tasks#edit', as: :edit_task_by_date
+  resources :advices, only: [:create]
 end

@@ -23,4 +23,15 @@ class Mood < ApplicationRecord
     when 1 then 'yaruki_moetsuki_man.png'
     end
   end
+
+  def mood_name
+    case score
+    when 5 then 'やる気満々（最高）'
+    when 4 then '良好'
+    when 3 then '普通'
+    when 2 then 'やや低調'
+    when 1 then 'やる気なし（最悪）'
+    else '不明'
+    end
+  end
 end
