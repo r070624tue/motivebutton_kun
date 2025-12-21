@@ -30,32 +30,36 @@ function initTasks() {
   if (adviceResultElement && taskShowElement && !taskShowElement.dataset.adviceLoaded) {
     taskShowElement.dataset.adviceLoaded = 'true';
     const date = taskShowElement.dataset.date;
+    const hasAdvice = taskShowElement.dataset.hasAdvice === 'true';
 
-    adviceResultElement.textContent = 'AIがアドバイスを考えています...';
+    // 既存のアドバイスがある場合はAPI呼び出しをスキップ
+    if (!hasAdvice) {
+      adviceResultElement.textContent = 'AIがアドバイスを考えています...';
 
-    (async () => {
-      try {
-        const response = await fetch('/advices', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
-          },
-          body: JSON.stringify({ date: date }),
-        });
+      (async () => {
+        try {
+          const response = await fetch('/advices', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: JSON.stringify({ date: date }),
+          });
 
-        if (!response.ok) {
-          throw new Error('サーバーからの応答が正常ではありません。');
+          if (!response.ok) {
+            throw new Error('サーバーからの応答が正常ではありません。');
+          }
+          
+          const data = await response.json();
+          adviceResultElement.textContent = data.advice;
+
+        } catch (error) {
+          console.error('エラー:', error);
+          adviceResultElement.textContent = 'エラーが発生しました。もう一度試してください。';
         }
-        
-        const data = await response.json();
-        adviceResultElement.textContent = data.advice;
-
-      } catch (error) {
-        console.error('エラー:', error);
-        adviceResultElement.textContent = 'エラーが発生しました。もう一度試してください。';
-      }
-    })();
+      })();
+    }
   }
 
   if (taskForm && !taskForm.dataset.boundSubmit) {

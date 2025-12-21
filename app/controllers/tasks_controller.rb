@@ -9,16 +9,17 @@ class TasksController < ApplicationController
   end
 
   def create
+    @date = Date.current
     tasks = tasks_params.map do |attrs|
       Task.new(
         content: attrs[:content],
         user_id: current_user.id,
-        date_on: Date.current
+        date_on: @date
       )
     end
 
     if tasks.each(&:save)
-      redirect_to root_path
+      redirect_to task_show_path(@date)
     else
       render :new, status: :unprocessable_entity
     end
@@ -33,6 +34,7 @@ class TasksController < ApplicationController
     end
     @tasks = current_user.tasks.where(date_on: @date).order(:created_at)
     @mood  = current_user.moods.where(date_on: @date).order(created_at: :desc).first
+    @advice = current_user.advices.find_by(date_on: @date)
   end
 
   def update

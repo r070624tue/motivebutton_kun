@@ -1,7 +1,7 @@
 <%= render 'shared/header' %>
 
 <div class="container">
-  <div class="task-show" data-date="<%= @date %>">
+  <div class="task-show" data-date="<%= @date %>" data-has-advice="<%= @advice.present? %>">
     <h2><%= l(@date, format: :long) %> のタスク</h2>
     
     <% if @mood.present? && @mood.image_name.present? %>
@@ -26,7 +26,13 @@
     <% end %>
 
     <h2>AIからのアドバイス</h2>
-    <p id="adviceResult">ここにアドバイスが表示されます。</p>
+    <p id="adviceResult">
+      <% if @advice.present? %>
+        <%= @advice.content %>
+      <% else %>
+        ここにアドバイスが表示されます。
+      <% end %>
+    </p>
 
     <div class="task-show__links">
       <%= link_to '編集', edit_task_by_date_path(@date), class: 'btn-primary', style: 'background-color: #34cfeb;' %>

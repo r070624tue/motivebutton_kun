@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_14_053322) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_21_112923) do
+  create_table "advices", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.date "date_on", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "date_on"], name: "index_advices_on_user_id_and_date_on", unique: true
+    t.index ["user_id"], name: "index_advices_on_user_id"
+  end
+
   create_table "moods", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "score", null: false
@@ -43,6 +53,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_14_053322) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "advices", "users"
   add_foreign_key "moods", "users"
   add_foreign_key "tasks", "users"
 end

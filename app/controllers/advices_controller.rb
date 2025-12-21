@@ -13,14 +13,28 @@ class AdvicesController < ApplicationController
       return
     end
 
+    # 既存のアドバイスをチェック
+    existing_advice = current_user.advices.find_by(date_on: @date)
+    if existing_advice
+      render json: { advice: existing_advice.content }
+      return
+    end
+
     mood_name_text = @mood.mood_name
     mood_score_text = "スコアが#{@mood.score}点"
     task_list = @tasks.map(&:content).join('、')
-    prompt = "あなたは世界最高のアドバイザーです。今日の気分とタスクを比較してタスクの量や質が妥当か、妥当ではない場合はどのように改善するのが良いかアドバイスを200文字以内でください。今日の気分は「#{mood_name_text}」（#{mood_score_text}）で、やるべきタスクは「#{task_list}」です。"
+    prompt = "あなたは世界最高のアドバイザーです。今日の気分とタスクを比較してタスクの量や質が妥当か、妥当ではない場合はどのように改善するのが良いかアドバイスをください。今日の気分は「#{mood_name_text}」（#{mood_score_text}）で、やるべきタスクは「#{task_list}」です。"
 
     begin
-      advice_text = openai_api_call(prompt)
-      render json: { advice: advice_text.strip }
+      advice_text = openai_api_call(prompt).strip
+      
+      # アドバイスをデータベースに保存
+      current_user.advices.create!(
+        date_on: @date,
+        content: advice_text
+      )
+      
+      render json: { advice: advice_text }
     rescue => e
       Rails.logger.error "Advice Generation Error: #{e.message}"
       render json: { advice: "サーバー側でエラーが発生しました。" }, status: :internal_server_error
