@@ -11,3 +11,4 @@ class CreateAdvices < ActiveRecord::Migration[7.1]
   end
 end
 
+
